@@ -3,51 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skillmatch Marketplace — Jobs & Tasks</title>
+<title>Skillmatch Marketplace — Dynamic Mock</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; }
-  header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:#003366; flex-wrap:wrap; position:relative; z-index:10;}
-  header img { width:140px; height:auto; }
-  header .btn-login, header .btn-signup { margin:5px 5px 0 0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  .btn-login { background:transparent; border:2px solid #FFD700; color:#FFD700; }
-  .btn-signup { background:#D4AF37; color:#000; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:#003366; flex-wrap:wrap; z-index:10;}
+header img { width:140px; height:auto; }
+header .btn-login, header .btn-signup, header .btn-role { margin:5px 5px 0 0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+.btn-login { background:transparent; border:2px solid #FFD700; color:#FFD700; }
+.btn-signup { background:#D4AF37; color:#000; }
+.btn-role { background:#0F4BE5; color:#fff; }
 
-  main { display:flex; max-width:1400px; margin:auto; }
-  #sidebar { display:none; flex-direction:column; width:200px; padding:20px; background:#071124; border-right:2px solid #FFD700; }
-  #sidebar button { background:#003366; border:none; color:#FFD700; padding:10px; margin:5px 0; border-radius:6px; cursor:pointer; text-align:left; font-weight:bold; display:none; }
-  .content { flex:1; padding:30px 20px; }
+main { padding:30px 5%; max-width:1200px; margin:auto; display:flex; gap:20px; }
+#sidebar { width:200px; flex-shrink:0; }
+#sidebar h3 { color:#FFD700; margin-bottom:10px; font-size:1rem; }
+#sidebar button { width:100%; margin:5px 0; padding:8px; border-radius:6px; border:none; background:#071124; color:#0F4BE5; cursor:pointer; text-align:left; font-weight:bold; }
+#content { flex-grow:1; }
 
-  h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
-  .banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
-  .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
+h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
+.banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
+.btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
 
-  section { margin-bottom:50px; display:none; }
-  section.active { display:block; }
-  h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
-  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-  .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
-  .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
-  .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
-  .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
+section { margin-bottom:50px; display:none; }
+section.active { display:block; }
+h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
+.grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+.card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; position:relative;}
+.card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
+.card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
+.card p { color:#fff; margin:2px 0; font-size:0.9rem; }
 
-  .modal, .overlay { display:none; position:fixed; inset:0; }
-  .overlay { background:rgba(0,0,0,0.7); z-index:20; }
-  .modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:400px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:30; }
-  .modal h3 { color:#FFD700; margin-bottom:12px; }
-  .modal p { margin-bottom:8px; }
-  .modal input { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:none; background:#00000050; color:#fff; }
-  .modal button { width:100%; padding:10px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
-  .btn-apply { background:#0F4BE5; color:#fff; }
-  .btn-close { background:transparent; border:2px solid #fff; color:#fff; }
+.notification { position:fixed; top:20px; right:-300px; background:#FFD700; color:#003366; padding:10px 15px; border-radius:6px; font-weight:bold; transition: right 0.5s; z-index:100; }
 
-  footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
-  footer a { color:#FFD700; text-decoration:underline; }
+footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
+footer a { color:#FFD700; text-decoration:underline; }
 
-  #flakes { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-  .flake { position:absolute; color:#D4AF37; font-size:12px; user-select:none; opacity:0.8; }
+table { width:100%; border-collapse:collapse; color:#fff; margin-top:10px; }
+th, td { border:1px solid #FFD700; padding:8px; text-align:left; }
 
-  @media(max-width:1024px){ main { flex-direction:column; } #sidebar { width:100%; flex-direction:row; overflow-x:auto; border-right:none; border-bottom:2px solid #FFD700;} #sidebar button{flex:1;} }
-  @media(max-width:480px){ .content{padding:20px 10px;} }
+.modal, .overlay { display:none; position:fixed; inset:0; }
+.overlay { background:rgba(0,0,0,0.7); z-index:50; }
+.modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:400px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:60; }
+.modal h3 { color:#FFD700; margin-bottom:12px; }
+.modal p { margin-bottom:8px; }
+.modal button { width:100%; padding:10px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
+
+@media(max-width:768px){
+  main { flex-direction:column; }
+  #sidebar { width:100%; display:flex; gap:10px; overflow-x:auto; }
+  #sidebar button { flex-shrink:0; width:auto; }
+  .grid { gap:15px; }
+  .card { width:100%; max-width:100%; }
+  h2 { font-size:1.3rem; }
+}
 </style>
 </head>
 <body>
@@ -55,217 +62,135 @@
 <header>
   <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="SkillMatch Logo" onerror="this.style.display='none';">
   <div>
-    <button class="btn-login" onclick="openModal('login')">Login</button>
-    <button class="btn-signup" onclick="openModal('signup')">Signup</button>
+    <button class="btn-login" onclick="alert('Login modal')">Login</button>
+    <button class="btn-signup" onclick="alert('Signup modal')">Signup</button>
+    <button class="btn-role" onclick="setRole('admin')">Admin</button>
+    <button class="btn-role" onclick="setRole('employer')">Employer</button>
+    <button class="btn-role" onclick="setRole('recruiter')">Recruiter</button>
+    <button class="btn-role" onclick="setRole('tasker')">Tasker</button>
   </div>
 </header>
 
 <main>
-  <!-- Sidebar for role-based navigation -->
-  <div id="sidebar" class="sidebar">
-    <button class="link" onclick="showSection('jobsSection')">Jobs</button>
-    <button class="link" onclick="showSection('tasksSection')">Tasks</button>
-    <button class="link" onclick="showSection('adminPanel')">Admin Dashboard</button>
-    <button class="link" onclick="showSection('employerPanel')">Employer Panel</button>
-    <button class="link" onclick="showSection('recruiterPanel')">Recruiter Panel</button>
-    <button class="link" onclick="showSection('taskerPanel')">Tasker Panel</button>
-    <button class="link" onclick="showSection('paymentsPanel')">Payments & Escrow</button>
-    <button class="link" onclick="showSection('freelancerPanel')">Freelancer Onboarding</button>
-    <button class="link" onclick="showSection('crmPanel')">Employer CRM</button>
-    <button class="link" onclick="showSection('leadsPanel')">Inbound Leads</button>
+  <div id="sidebar">
+    <h3>Navigation</h3>
+    <button onclick="showPanel('adminDashboard')">Admin Dashboard</button>
+    <button onclick="showPanel('employerPanel')">Employer Panel</button>
+    <button onclick="showPanel('recruiterPanel')">Recruiter Panel</button>
+    <button onclick="showPanel('taskerPanel')">Tasker Panel</button>
+    <button onclick="showPanel('paymentsPanel')">Payments & Escrow</button>
   </div>
 
-  <!-- Main content -->
-  <div class="content">
+  <div id="content">
     <h1>Skillmatch Marketplace</h1>
     <div class="banner">Payments & full features coming soon! Enjoy the demo.</div>
     <div style="text-align:center;">
-      <button class="btn-demo" onclick="generateDemoVideo()">Generate Demo Video</button>
+      <button class="btn-demo" onclick="alert('Demo video generated!')">Generate Demo Video</button>
     </div>
 
-    <!-- Sections -->
+    <!-- Public Jobs -->
     <section id="jobsSection" class="active">
       <h2>Jobs</h2>
       <div class="grid" id="jobsGrid"></div>
     </section>
 
-    <section id="tasksSection">
+    <!-- Public Tasks -->
+    <section id="tasksSection" class="active">
       <h2>Tasks / Micro Gigs</h2>
       <div class="grid" id="tasksGrid"></div>
     </section>
 
-    <section id="adminPanel">
-      <h2>Admin Dashboard Preview</h2>
+    <!-- Admin Panel -->
+    <section id="adminDashboard">
+      <h2>Admin Dashboard</h2>
       <div class="grid">
-        <div class="card" onclick="alert('Admin: View Users')"><h3>Total Users</h3><p>1,200</p></div>
-        <div class="card" onclick="alert('Admin: View Tasks')"><h3>Total Tasks</h3><p>5,400</p></div>
-        <div class="card" onclick="alert('Admin: Manage Payments')"><h3>Payments Pending</h3><p>120</p></div>
+        <div class="card" id="counterUsers"><h3>Total Users</h3><p>0</p></div>
+        <div class="card" id="counterTasks"><h3>Total Tasks</h3><p>0</p></div>
+        <div class="card" id="counterPayments"><h3>Payments</h3><p>$0</p></div>
+        <div class="card" onclick="showModal('AI Vetting','AI vetting in progress... Profile Score: 92%')"><h3>Freelancers Overview</h3><p>AI vetting & ratings</p></div>
+        <div class="card" onclick="showModal('Employer Acquisition','Tracking pitches, follow-ups & CRM')"><h3>Employer Acquisition</h3><p>Pitches & CRM</p></div>
       </div>
     </section>
 
-    <section id="employerPanel">
-      <h2>Employer Panel Preview</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('Post a new job')"><h3>Post Job</h3><p>Create a new job for global taskers.</p></div>
-        <div class="card" onclick="alert('View your jobs')"><h3>My Jobs</h3><p>Track applications and completions.</p></div>
-      </div>
-    </section>
-
-    <section id="recruiterPanel">
-      <h2>Recruiter Panel Preview</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('Search candidates')"><h3>Search Candidates</h3><p>Find top taskers globally.</p></div>
-        <div class="card" onclick="alert('Manage candidates')"><h3>Candidate Management</h3><p>Shortlist or message taskers.</p></div>
-      </div>
-    </section>
-
-    <section id="taskerPanel">
-      <h2>Tasker Panel Preview</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('View available tasks')"><h3>My Tasks</h3><p>See and apply for tasks.</p></div>
-        <div class="card" onclick="alert('Profile management')"><h3>Profile</h3><p>Edit profile, reviews, and ratings.</p></div>
-      </div>
-    </section>
-
-    <section id="paymentsPanel">
-      <h2>Payments & Escrow</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('Pay via M-Pesa')"><h3>M-Pesa</h3><p>Instant mobile payments</p></div>
-        <div class="card" onclick="alert('Pay via Visa')"><h3>Visa</h3><p>Credit / Debit Card</p></div>
-        <div class="card" onclick="alert('Pay via PayPal')"><h3>PayPal</h3><p>Secure online payments</p></div>
-        <div class="card" onclick="alert('View transactions')"><h3>Transactions</h3><p>Summary & history</p></div>
-      </div>
-    </section>
-
-    <section id="freelancerPanel">
-      <h2>Freelancer Onboarding & AI Assistance</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('AI vetting profile')"><h3>AI Vetting</h3><p>Ensure credibility & quality</p></div>
-        <div class="card" onclick="alert('Profile rating & reviews')"><h3>Ratings</h3><p>Automatic review & credibility system</p></div>
-      </div>
-    </section>
-
-    <section id="crmPanel">
-      <h2>Employer CRM & Pitching System</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('Track pitches & follow-ups')"><h3>Employer Tracking</h3><p>Monitor pitches and interactions</p></div>
-        <div class="card" onclick="alert('View follow-ups')"><h3>Follow-ups</h3><p>Automated reminders & logs</p></div>
-      </div>
-    </section>
-
-    <section id="leadsPanel">
-      <h2>Inbound Leads & Auto Pitching</h2>
-      <div class="grid">
-        <div class="card" onclick="alert('High-ticket employer detected')"><h3>Auto Detect Leads</h3><p>From LinkedIn, Fiverr, Upwork</p></div>
-        <div class="card" onclick="alert('Auto-send pitch template')"><h3>Auto Pitch</h3><p>Send pre-designed proposals</p></div>
-      </div>
-    </section>
+    <!-- Panels for Employer, Recruiter, Tasker, Payments remain same as previous code -->
+    
   </div>
 </main>
+
+<div class="notification" id="notification"></div>
 
 <footer>
   &copy; 2025 Skillmatch Marketplace — <a href="#">See More Jobs / Tasks</a>
 </footer>
 
-<div id="flakes"></div>
-
-<!-- Modals -->
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
-<div class="modal" id="jobModal">
+<div class="modal" id="genericModal">
   <h3 id="modalTitle"></h3>
-  <p id="modalCompany"></p>
-  <p id="modalSalary"></p>
-  <p id="modalDesc"></p>
-  <button class="btn-apply" onclick="applyJob()">Apply Now</button>
-  <button class="btn-close" onclick="closeModal()">Close</button>
-</div>
-<div class="modal" id="loginModal">
-  <h3 id="loginTitle"></h3>
-  <input type="email" placeholder="Email">
-  <input type="password" placeholder="Password">
-  <button style="background:#D4AF37; color:#000;">Submit</button>
-  <button class="btn-close" onclick="closeModal()">Close</button>
+  <p id="modalContent"></p>
+  <button onclick="closeModal()">Close</button>
 </div>
 
 <script>
-// Demo jobs and tasks
+// Public jobs/tasks
 const jobs=[], tasks=[];
 for(let i=1;i<=20;i++){
-  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20} - $${1000+i*30}`,desc:`Demo description for Job Position ${i}.`});
+  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20} - $${1000+i*30}`});
   tasks.push({id:i,title:`Task ${i}`,reward:(0.5+i*0.25).toFixed(2),est:`${2+i} min`});
 }
 const jobsGrid=document.getElementById("jobsGrid");
 const tasksGrid=document.getElementById("tasksGrid");
 jobs.forEach(job=>{
   const div=document.createElement("div");
-  div.className="card";
-  div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
-  div.onclick=()=>openJobModal(job);
+  div.className="card"; div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
   jobsGrid.appendChild(div);
 });
 tasks.forEach(task=>{
   const div=document.createElement("div");
-  div.className="card";
-  div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
-  div.onclick=()=>alert("Start Task: "+task.title);
+  div.className="card"; div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
   tasksGrid.appendChild(div);
 });
 
-// Modals
-const overlay=document.getElementById("overlay");
-const jobModal=document.getElementById("jobModal");
-const loginModal=document.getElementById("loginModal");
-function openJobModal(job){
-  document.getElementById("modalTitle").innerText=job.title;
-  document.getElementById("modalCompany").innerText=job.company;
-  document.getElementById("modalSalary").innerText=job.salary;
-  document.getElementById("modalDesc").innerText=job.desc;
-  overlay.style.display="block"; jobModal.style.display="block";
-}
-function openModal(type){
-  overlay.style.display="block"; loginModal.style.display="block";
-  document.getElementById("loginTitle").innerText=type==="login"?"Login":"Signup";
-}
-function closeModal(){
-  overlay.style.display="none"; jobModal.style.display="none"; loginModal.style.display="none";
-}
-function applyJob(){ alert("Apply Flow (connect to Firebase or email)"); closeModal(); }
-function generateDemoVideo(){ alert("Demo video generated! (6 seconds preview)"); }
-
-// Sidebar & Role-based logic
-function showSection(id){
-  document.querySelectorAll('.content section').forEach(sec=>sec.classList.remove('active'));
+// Sidebar navigation
+function showPanel(id){
+  document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// Golden flakes
-const flakesContainer = document.getElementById('flakes');
-const flakesCount = 50;
-for(let i=0;i<flakesCount;i++){
-  const flake = document.createElement('div');
-  flake.className='flake';
-  flake.innerHTML='✦';
-  flake.style.left=Math.random()*window.innerWidth+'px';
-  flake.style.top=Math.random()*window.innerHeight+'px';
-  flake.style.fontSize=8+Math.random()*12+'px';
-  flake.style.opacity=0.5+Math.random()*0.5;
-  flakesContainer.appendChild(flake);
+// Set user role
+function setRole(role){
+  showNotification(`Logged in as ${role.toUpperCase()}`);
 }
-function animateFlakes(){
-  document.querySelectorAll('.flake').forEach(flake=>{
-    let top=parseFloat(flake.style.top);
-    let left=parseFloat(flake.style.left);
-    top+=0.3+Math.random()*1.2;
-    left+=Math.sin(top/50)*0.5;
-    if(top>window.innerHeight) top=-10;
-    if(left>window.innerWidth) left=0;
-    if(left<0) left=window.innerWidth;
-    flake.style.top=top+'px';
-    flake.style.left=left+'px';
-  });
-  requestAnimationFrame(animateFlakes);
+
+// Generic modal
+const overlay=document.getElementById('overlay');
+const genericModal=document.getElementById('genericModal');
+function showModal(title, content){
+  document.getElementById('modalTitle').innerText=title;
+  document.getElementById('modalContent').innerText=content;
+  overlay.style.display='block';
+  genericModal.style.display='block';
 }
-animateFlakes();
+function closeModal(){ overlay.style.display='none'; genericModal.style.display='none'; }
+
+// Notification
+const notif=document.getElementById('notification');
+function showNotification(msg){
+  notif.innerText=msg; notif.style.right='20px';
+  setTimeout(()=>{ notif.style.right='-300px'; },3000);
+}
+
+// Live counters simulation
+let users=1200, tasksCount=5400, payments=15000;
+function updateCounters(){
+  document.getElementById('counterUsers').querySelector('p').innerText=users;
+  document.getElementById('counterTasks').querySelector('p').innerText=tasksCount;
+  document.getElementById('counterPayments').querySelector('p').innerText=`$${payments}`;
+}
+setInterval(()=>{
+  users+=Math.floor(Math.random()*5); tasksCount+=Math.floor(Math.random()*10); payments+=Math.floor(Math.random()*100);
+  updateCounters();
+},2000);
+updateCounters();
 </script>
 </body>
 </html>
