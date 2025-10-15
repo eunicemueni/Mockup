@@ -19,55 +19,104 @@
 <meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
 
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; display:flex; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; display:flex; min-height:100vh; }
   
   /* Sidebar */
-  #sidebar {
-    width:220px; background:#003366; padding:20px 10px; display:flex; flex-direction:column; gap:15px;
-    position:fixed; top:0; left:0; height:100%; overflow-y:auto; z-index:10; border-right:2px solid #FFD700;
-  }
-  #sidebar h3 { color:#FFD700; margin-bottom:10px; font-size:1.1rem; }
-  #sidebar button { width:100%; padding:10px; border:none; border-radius:6px; background:#0F4BE5; color:#fff; font-weight:bold; cursor:pointer; text-align:left; }
-  
-  /* Main Content */
-  main { margin-left:240px; padding:30px 5%; flex:1; max-width:1200px; }
+  .sidebar { width:220px; background:#003366; padding:20px 10px; flex-shrink:0; display:flex; flex-direction:column; align-items:flex-start; }
+  .sidebar h3 { color:#FFD700; margin-bottom:10px; font-size:1.2rem; }
+  .sidebar .menu-section { margin-bottom:25px; width:100%; }
+  .sidebar .menu-section button { display:block; width:100%; margin:5px 0; padding:8px 10px; border:none; border-radius:6px; background:#0F4BE5; color:#fff; cursor:pointer; text-align:left; font-weight:bold; }
+  .sidebar .menu-section button:hover { background:#FFD700; color:#003366; }
+
+  /* Header */
+  header { display:flex; justify-content:space-between; align-items:center; padding:10px; background:#003366; width:100%; position:sticky; top:0; z-index:10; }
+  header img { width:140px; height:auto; }
+  header .btn-login, header .btn-signup { margin-left:5px; padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+  .btn-login { background:transparent; border:2px solid #FFD700; color:#FFD700; }
+  .btn-signup { background:#D4AF37; color:#000; }
+
+  /* Main content */
+  main { padding:30px; flex:1; }
   h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
   .banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
   .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
 
   section { margin-bottom:50px; }
   h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
-  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:flex-start; }
+  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
   .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
   .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
   .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
   .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
 
-  table { width:100%; border-collapse:collapse; color:#fff; }
-  th, td { padding:8px; border-bottom:1px solid #FFD700; text-align:left; }
+  .modal, .overlay { display:none; position:fixed; inset:0; }
+  .overlay { background:rgba(0,0,0,0.7); z-index:20; }
+  .modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:400px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:30; }
+  .modal h3 { color:#FFD700; margin-bottom:12px; }
+  .modal p { margin-bottom:8px; }
+  .modal input { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:none; background:#00000050; color:#fff; }
+  .modal button { width:100%; padding:10px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
+  .btn-apply { background:#0F4BE5; color:#fff; }
+  .btn-close { background:transparent; border:2px solid #fff; color:#fff; }
 
-  footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
+  /* Footer */
+  footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; width:100%; }
   footer a { color:#FFD700; text-decoration:underline; }
 
+  #flakes { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .flake { position:absolute; color:#D4AF37; font-size:12px; user-select:none; opacity:0.8; }
+
   @media(max-width:768px){
-    #sidebar { position:relative; width:100%; height:auto; border-right:none; flex-direction:row; overflow-x:auto; }
-    #sidebar button { flex:1 0 auto; }
-    main { margin-left:0; }
+    body { flex-direction:column; }
+    .sidebar { width:100%; flex-direction:row; flex-wrap:wrap; justify-content:center; padding:10px; }
+    .sidebar .menu-section { flex:1 1 45%; margin-bottom:10px; }
+    .grid { gap:15px; }
+    .card { width:100%; max-width:100%; }
+    h2 { font-size:1.3rem; }
+  }
+  @media(max-width:480px){
+    main { padding:20px 3%; }
+    .btn-demo { padding:8px 16px; }
   }
 </style>
 </head>
 <body>
 
 <!-- Sidebar -->
-<div id="sidebar">
-  <h3>Admin Panel</h3>
-  <button onclick="scrollToSection('payments-escrow')">Payments & Escrow</button>
-  <button onclick="scrollToSection('freelancer-workflow')">Freelancer Workflow</button>
-  <button onclick="scrollToSection('inbound-leads')">Inbound Leads</button>
-  <h3>Other Panels</h3>
-  <button onclick="scrollToSection('jobsGrid')">Jobs</button>
-  <button onclick="scrollToSection('tasksGrid')">Tasks / Micro Gigs</button>
+<div class="sidebar">
+  <div class="menu-section">
+    <h3>Admin</h3>
+    <button onclick="alert('View Users')">Users</button>
+    <button onclick="alert('View Tasks')">Tasks</button>
+    <button onclick="alert('Manage Payments & Escrow')">Payments</button>
+  </div>
+  <div class="menu-section">
+    <h3>Employer</h3>
+    <button onclick="alert('Post a new job')">Post Job</button>
+    <button onclick="alert('View Jobs')">My Jobs</button>
+  </div>
+  <div class="menu-section">
+    <h3>Recruiter</h3>
+    <button onclick="alert('Search Candidates')">Search Candidates</button>
+    <button onclick="alert('Candidate Management')">Candidate Management</button>
+  </div>
+  <div class="menu-section">
+    <h3>Payments</h3>
+    <button onclick="alert('M-Pesa')">M-Pesa</button>
+    <button onclick="alert('Visa Card')">Visa</button>
+    <button onclick="alert('PayPal')">PayPal</button>
+  </div>
 </div>
+
+<div style="flex:1; display:flex; flex-direction:column;">
+
+<header>
+  <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="SkillMatch Logo" onerror="this.style.display='none';">
+  <div>
+    <button class="btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-signup" onclick="openModal('signup')">Signup</button>
+  </div>
+</header>
 
 <main>
   <h1>Skillmatch Marketplace</h1>
@@ -88,64 +137,13 @@
     <div class="grid" id="tasksGrid"></div>
   </section>
 
-  <!-- Payments & Escrow -->
-  <section id="payments-escrow">
-    <h2>Payments & Escrow</h2>
-    <div class="grid">
-      <div class="card" onclick="alert('M-Pesa transactions')"><h3>M-Pesa</h3><p>Total: $3,200</p><p>Pending: $150</p></div>
-      <div class="card" onclick="alert('Visa transactions')"><h3>Visa</h3><p>Total: $5,400</p><p>Pending: $220</p></div>
-      <div class="card" onclick="alert('PayPal transactions')"><h3>PayPal</h3><p>Total: $4,800</p><p>Pending: $300</p></div>
-      <div class="card" onclick="alert('Escrow overview')"><h3>Escrow</h3><p>Held: $1,200</p><p>Released: $3,500</p></div>
-    </div>
-    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
-      <table>
-        <thead>
-          <tr><th>Date</th><th>User</th><th>Method</th><th>Amount</th><th>Status</th></tr>
-        </thead>
-        <tbody id="transactionTable"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Freelancer Workflow -->
-  <section id="freelancer-workflow">
-    <h2>AI Workflow & Payments Integration</h2>
-    <div class="grid">
-      <div class="card" onclick="alert('AI Task Vetting Completed')"><h3>AI Task Vetting</h3><p>Tasks auto-reviewed.</p></div>
-      <div class="card" onclick="alert('Task Status Updated')"><h3>Task Completion</h3><p>Pending, In Progress, Completed.</p></div>
-      <div class="card" onclick="alert('Profile Rating Updated')"><h3>Profile Rating</h3><p>Credibility auto-updated.</p></div>
-      <div class="card" onclick="alert('Escrow Updated')"><h3>Revenue / Escrow</h3><p>Funds auto-allocated & released.</p></div>
-      <div class="card" onclick="alert('Notifications Sent')"><h3>Notifications</h3><p>Task & payment alerts.</p></div>
-    </div>
-    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
-      <table>
-        <thead>
-          <tr><th>Task</th><th>Freelancer</th><th>Status</th><th>Payment</th><th>Escrow</th></tr>
-        </thead>
-        <tbody id="freelancerTaskTable"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Inbound Leads & Auto-Pitch -->
-  <section id="inbound-leads">
-    <h2>Inbound Leads & Auto-Pitching</h2>
-    <div class="grid">
-      <div class="card" onclick="alert('High-Ticket Employers Detected')"><h3>High-Ticket Detection</h3><p>Detect premium clients automatically.</p></div>
-      <div class="card" onclick="alert('Auto-Pitch Sent')"><h3>Auto-Pitch Templates</h3><p>Messages sent automatically.</p></div>
-      <div class="card" onclick="alert('Lead Status Overview')"><h3>Lead Status</h3><p>Contacted, Responded, Ignored.</p></div>
-      <div class="card" onclick="alert('Conversion Insights')"><h3>Conversion Insights</h3><p>Track paying employers.</p></div>
-      <div class="card" onclick="alert('Revenue Forecast')"><h3>Revenue Forecast</h3><p>Potential earnings estimated.</p></div>
-      <div class="card" onclick="alert('Follow-Up Scheduling')"><h3>Follow-Up</h3><p>Auto reminders for leads.</p></div>
-    </div>
-    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
-      <table>
-        <thead>
-          <tr><th>Lead</th><th>Platform</th><th>Status</th><th>Pitch Sent</th><th>Potential Revenue</th></tr>
-        </thead>
-        <tbody id="inboundLeadsTable"></tbody>
-      </table>
-    </div>
+  <!-- About / Launch Info -->
+  <section>
+    <h2>About Skillmatch</h2>
+    <p style="text-align:center; max-width:700px; margin:auto;">
+      Skillmatch is a global marketplace connecting clients and taskers from all over the world. 
+      Launched on <strong>14/10/2025</strong>, it offers secure payments, instant task assignments, and a platform built for scaling globally.
+    </p>
   </section>
 
 </main>
@@ -154,64 +152,109 @@
   &copy; 2025 Skillmatch Marketplace — <a href="#">See More Jobs / Tasks</a>
 </footer>
 
+</div>
+
+<div id="flakes"></div>
+
+<!-- Modals -->
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+<div class="modal" id="jobModal">
+  <h3 id="modalTitle"></h3>
+  <p id="modalCompany"></p>
+  <p id="modalSalary"></p>
+  <p id="modalDesc"></p>
+  <button class="btn-apply" onclick="applyJob()">Apply Now</button>
+  <button class="btn-close" onclick="closeModal()">Close</button>
+</div>
+<div class="modal" id="loginModal">
+  <h3 id="loginTitle"></h3>
+  <input type="email" placeholder="Email">
+  <input type="password" placeholder="Password">
+  <button style="background:#D4AF37; color:#000;">Submit</button>
+  <button class="btn-close" onclick="closeModal()">Close</button>
+</div>
+
 <script>
+// Demo jobs and tasks
 const jobs=[], tasks=[];
 for(let i=1;i<=20;i++){
-  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20}`});
+  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20} - $${1000+i*30}`,desc:`Demo description for Job Position ${i}.`});
   tasks.push({id:i,title:`Task ${i}`,reward:(0.5+i*0.25).toFixed(2),est:`${2+i} min`});
 }
 
 const jobsGrid=document.getElementById("jobsGrid");
 const tasksGrid=document.getElementById("tasksGrid");
+
 jobs.forEach(job=>{
   const div=document.createElement("div");
   div.className="card";
   div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
+  div.onclick=()=>openJobModal(job);
   jobsGrid.appendChild(div);
 });
+
 tasks.forEach(task=>{
   const div=document.createElement("div");
   div.className="card";
   div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
+  div.onclick=()=>alert("Start Task: "+task.title);
   tasksGrid.appendChild(div);
 });
 
-// Transactions mock
-const transactionTable=document.getElementById("transactionTable");
-const transactions=[{date:"2025-10-14",user:"John Doe",method:"M-Pesa",amount:"$50",status:"Completed"},{date:"2025-10-15",user:"Jane Smith",method:"PayPal",amount:"$120",status:"Pending"}];
-transactions.forEach(t=>{
-  const row=document.createElement("tr");
-  row.innerHTML=`<td>${t.date}</td><td>${t.user}</td><td>${t.method}</td><td>${t.amount}</td><td>${t.status}</td>`;
-  transactionTable.appendChild(row);
-});
+// Modals
+const overlay=document.getElementById("overlay");
+const jobModal=document.getElementById("jobModal");
+const loginModal=document.getElementById("loginModal");
 
-// Freelancer task mock
-const freelancerTaskTable=document.getElementById("freelancerTaskTable");
-const fTasks=[{task:"Design Logo",freelancer:"Alice",status:"Completed",payment:"$50",escrow:"Released"},{task:"Write Article",freelancer:"Bob",status:"In Progress",payment:"$30",escrow:"Held"}];
-fTasks.forEach(t=>{
-  const row=document.createElement("tr");
-  row.innerHTML=`<td>${t.task}</td><td>${t.freelancer}</td><td>${t.status}</td><td>${t.payment}</td><td>${t.escrow}</td>`;
-  freelancerTaskTable.appendChild(row);
-});
+function openJobModal(job){
+  document.getElementById("modalTitle").innerText=job.title;
+  document.getElementById("modalCompany").innerText=job.company;
+  document.getElementById("modalSalary").innerText=job.salary;
+  document.getElementById("modalDesc").innerText=job.desc;
+  overlay.style.display="block"; jobModal.style.display="block";
+}
 
-// Inbound Leads
-const inboundLeads = [
-  {lead:"ABC Corp", platform:"LinkedIn", status:"Contacted", pitch:"Sent", revenue:"$500"},
-  {lead:"XYZ Ltd", platform:"Fiverr", status:"Responded", pitch:"Sent", revenue:"$1,200"},
-  {lead:"MegaDesigns", platform:"Upwork", status:"Ignored", pitch:"Sent", revenue:"$750"},
-];
-const inboundLeadsTable = document.getElementById("inboundLeadsTable");
-inboundLeads.forEach(lead=>{
-  const row = document.createElement("tr");
-  row.innerHTML=`<td>${lead.lead}</td><td>${lead.platform}</td><td>${lead.status}</td><td>${lead.pitch}</td><td>${lead.revenue}</td>`;
-  inboundLeadsTable.appendChild(row);
-});
+function openModal(type){
+  overlay.style.display="block"; loginModal.style.display="block";
+  document.getElementById("loginTitle").innerText=type==="login"?"Login":"Signup";
+}
 
-// Demo video alert
+function closeModal(){
+  overlay.style.display="none"; jobModal.style.display="none"; loginModal.style.display="none";
+}
+
+function applyJob(){ alert("Apply Flow (connect to Firebase or email)"); closeModal(); }
 function generateDemoVideo(){ alert("Demo video generated! (6 seconds preview)"); }
 
-// Scroll sidebar
-function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});}
+// Golden flakes
+const flakesContainer = document.getElementById('flakes');
+const flakesCount = 50;
+for(let i=0;i<flakesCount;i++){
+  const flake = document.createElement('div');
+  flake.className='flake';
+  flake.innerHTML='✦';
+  flake.style.left=Math.random()*window.innerWidth+'px';
+  flake.style.top=Math.random()*window.innerHeight+'px';
+  flake.style.fontSize=8+Math.random()*12+'px';
+  flake.style.opacity=0.5+Math.random()*0.5;
+  flakesContainer.appendChild(flake);
+}
+
+function animateFlakes(){
+  document.querySelectorAll('.flake').forEach(flake=>{
+    let top=parseFloat(flake.style.top);
+    let left=parseFloat(flake.style.left);
+    top+=0.3+Math.random()*1.2;
+    left+=Math.sin(top/50)*0.5;
+    if(top>window.innerHeight) top=-10;
+    if(left>window.innerWidth) left=0;
+    if(left<0) left=window.innerWidth;
+    flake.style.top=top+'px';
+    flake.style.left=left+'px';
+  });
+  requestAnimationFrame(animateFlakes);
+}
+animateFlakes();
 </script>
 </body>
 </html>
