@@ -3,194 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skillmatch Marketplace — Dynamic Mock</title>
+<title>Skillmatch Marketplace — Jobs & Tasks</title>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="Skillmatch Marketplace — Jobs & Tasks">
+<meta property="og:description" content="Find jobs, tasks, and micro-gigs instantly. Generate demo videos and explore opportunities.">
+<meta property="og:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+<meta property="og:url" content="https://skillmatch-live.onrender.com/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skillmatch Marketplace — Jobs & Tasks">
+<meta name="twitter:description" content="Find jobs, tasks, and micro-gigs instantly. Generate demo videos and explore opportunities.">
+<meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; }
-header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:#003366; flex-wrap:wrap; z-index:10;}
-header img { width:140px; height:auto; }
-header .btn-login, header .btn-signup, header .btn-role { margin:5px 5px 0 0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-.btn-login { background:transparent; border:2px solid #FFD700; color:#FFD700; }
-.btn-signup { background:#D4AF37; color:#000; }
-.btn-role { background:#0F4BE5; color:#fff; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; display:flex; }
+  
+  /* Sidebar */
+  #sidebar {
+    width:220px; background:#003366; padding:20px 10px; display:flex; flex-direction:column; gap:15px;
+    position:fixed; top:0; left:0; height:100%; overflow-y:auto; z-index:10; border-right:2px solid #FFD700;
+  }
+  #sidebar h3 { color:#FFD700; margin-bottom:10px; font-size:1.1rem; }
+  #sidebar button { width:100%; padding:10px; border:none; border-radius:6px; background:#0F4BE5; color:#fff; font-weight:bold; cursor:pointer; text-align:left; }
+  
+  /* Main Content */
+  main { margin-left:240px; padding:30px 5%; flex:1; max-width:1200px; }
+  h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
+  .banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
+  .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
 
-main { padding:30px 5%; max-width:1200px; margin:auto; display:flex; gap:20px; }
-#sidebar { width:200px; flex-shrink:0; }
-#sidebar h3 { color:#FFD700; margin-bottom:10px; font-size:1rem; }
-#sidebar button { width:100%; margin:5px 0; padding:8px; border-radius:6px; border:none; background:#071124; color:#0F4BE5; cursor:pointer; text-align:left; font-weight:bold; }
-#content { flex-grow:1; }
+  section { margin-bottom:50px; }
+  h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
+  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:flex-start; }
+  .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
+  .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
+  .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
 
-h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
-.banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
-.btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
+  table { width:100%; border-collapse:collapse; color:#fff; }
+  th, td { padding:8px; border-bottom:1px solid #FFD700; text-align:left; }
 
-section { margin-bottom:50px; display:none; }
-section.active { display:block; }
-h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
-.grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-.card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; position:relative;}
-.card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
-.card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
-.card p { color:#fff; margin:2px 0; font-size:0.9rem; }
+  footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
+  footer a { color:#FFD700; text-decoration:underline; }
 
-.notification { position:fixed; top:20px; right:-300px; background:#FFD700; color:#003366; padding:10px 15px; border-radius:6px; font-weight:bold; transition: right 0.5s; z-index:100; }
-
-footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
-footer a { color:#FFD700; text-decoration:underline; }
-
-table { width:100%; border-collapse:collapse; color:#fff; margin-top:10px; }
-th, td { border:1px solid #FFD700; padding:8px; text-align:left; }
-
-.modal, .overlay { display:none; position:fixed; inset:0; }
-.overlay { background:rgba(0,0,0,0.7); z-index:50; }
-.modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:400px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:60; }
-.modal h3 { color:#FFD700; margin-bottom:12px; }
-.modal p { margin-bottom:8px; }
-.modal button { width:100%; padding:10px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
-
-@media(max-width:768px){
-  main { flex-direction:column; }
-  #sidebar { width:100%; display:flex; gap:10px; overflow-x:auto; }
-  #sidebar button { flex-shrink:0; width:auto; }
-  .grid { gap:15px; }
-  .card { width:100%; max-width:100%; }
-  h2 { font-size:1.3rem; }
-}
+  @media(max-width:768px){
+    #sidebar { position:relative; width:100%; height:auto; border-right:none; flex-direction:row; overflow-x:auto; }
+    #sidebar button { flex:1 0 auto; }
+    main { margin-left:0; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="SkillMatch Logo" onerror="this.style.display='none';">
-  <div>
-    <button class="btn-login" onclick="alert('Login modal')">Login</button>
-    <button class="btn-signup" onclick="alert('Signup modal')">Signup</button>
-    <button class="btn-role" onclick="setRole('admin')">Admin</button>
-    <button class="btn-role" onclick="setRole('employer')">Employer</button>
-    <button class="btn-role" onclick="setRole('recruiter')">Recruiter</button>
-    <button class="btn-role" onclick="setRole('tasker')">Tasker</button>
-  </div>
-</header>
+<!-- Sidebar -->
+<div id="sidebar">
+  <h3>Admin Panel</h3>
+  <button onclick="scrollToSection('payments-escrow')">Payments & Escrow</button>
+  <button onclick="scrollToSection('freelancer-workflow')">Freelancer Workflow</button>
+  <button onclick="scrollToSection('inbound-leads')">Inbound Leads</button>
+  <h3>Other Panels</h3>
+  <button onclick="scrollToSection('jobsGrid')">Jobs</button>
+  <button onclick="scrollToSection('tasksGrid')">Tasks / Micro Gigs</button>
+</div>
 
 <main>
-  <div id="sidebar">
-    <h3>Navigation</h3>
-    <button onclick="showPanel('adminDashboard')">Admin Dashboard</button>
-    <button onclick="showPanel('employerPanel')">Employer Panel</button>
-    <button onclick="showPanel('recruiterPanel')">Recruiter Panel</button>
-    <button onclick="showPanel('taskerPanel')">Tasker Panel</button>
-    <button onclick="showPanel('paymentsPanel')">Payments & Escrow</button>
+  <h1>Skillmatch Marketplace</h1>
+  <div class="banner">Payments & full features coming soon! Enjoy the demo.</div>
+  <div style="text-align:center;">
+    <button class="btn-demo" onclick="generateDemoVideo()">Generate Demo Video</button>
   </div>
 
-  <div id="content">
-    <h1>Skillmatch Marketplace</h1>
-    <div class="banner">Payments & full features coming soon! Enjoy the demo.</div>
-    <div style="text-align:center;">
-      <button class="btn-demo" onclick="alert('Demo video generated!')">Generate Demo Video</button>
+  <!-- Jobs Section -->
+  <section>
+    <h2>Jobs</h2>
+    <div class="grid" id="jobsGrid"></div>
+  </section>
+
+  <!-- Tasks Section -->
+  <section>
+    <h2>Tasks / Micro Gigs</h2>
+    <div class="grid" id="tasksGrid"></div>
+  </section>
+
+  <!-- Payments & Escrow -->
+  <section id="payments-escrow">
+    <h2>Payments & Escrow</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('M-Pesa transactions')"><h3>M-Pesa</h3><p>Total: $3,200</p><p>Pending: $150</p></div>
+      <div class="card" onclick="alert('Visa transactions')"><h3>Visa</h3><p>Total: $5,400</p><p>Pending: $220</p></div>
+      <div class="card" onclick="alert('PayPal transactions')"><h3>PayPal</h3><p>Total: $4,800</p><p>Pending: $300</p></div>
+      <div class="card" onclick="alert('Escrow overview')"><h3>Escrow</h3><p>Held: $1,200</p><p>Released: $3,500</p></div>
     </div>
+    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>User</th><th>Method</th><th>Amount</th><th>Status</th></tr>
+        </thead>
+        <tbody id="transactionTable"></tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- Public Jobs -->
-    <section id="jobsSection" class="active">
-      <h2>Jobs</h2>
-      <div class="grid" id="jobsGrid"></div>
-    </section>
+  <!-- Freelancer Workflow -->
+  <section id="freelancer-workflow">
+    <h2>AI Workflow & Payments Integration</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('AI Task Vetting Completed')"><h3>AI Task Vetting</h3><p>Tasks auto-reviewed.</p></div>
+      <div class="card" onclick="alert('Task Status Updated')"><h3>Task Completion</h3><p>Pending, In Progress, Completed.</p></div>
+      <div class="card" onclick="alert('Profile Rating Updated')"><h3>Profile Rating</h3><p>Credibility auto-updated.</p></div>
+      <div class="card" onclick="alert('Escrow Updated')"><h3>Revenue / Escrow</h3><p>Funds auto-allocated & released.</p></div>
+      <div class="card" onclick="alert('Notifications Sent')"><h3>Notifications</h3><p>Task & payment alerts.</p></div>
+    </div>
+    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
+      <table>
+        <thead>
+          <tr><th>Task</th><th>Freelancer</th><th>Status</th><th>Payment</th><th>Escrow</th></tr>
+        </thead>
+        <tbody id="freelancerTaskTable"></tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- Public Tasks -->
-    <section id="tasksSection" class="active">
-      <h2>Tasks / Micro Gigs</h2>
-      <div class="grid" id="tasksGrid"></div>
-    </section>
+  <!-- Inbound Leads & Auto-Pitch -->
+  <section id="inbound-leads">
+    <h2>Inbound Leads & Auto-Pitching</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('High-Ticket Employers Detected')"><h3>High-Ticket Detection</h3><p>Detect premium clients automatically.</p></div>
+      <div class="card" onclick="alert('Auto-Pitch Sent')"><h3>Auto-Pitch Templates</h3><p>Messages sent automatically.</p></div>
+      <div class="card" onclick="alert('Lead Status Overview')"><h3>Lead Status</h3><p>Contacted, Responded, Ignored.</p></div>
+      <div class="card" onclick="alert('Conversion Insights')"><h3>Conversion Insights</h3><p>Track paying employers.</p></div>
+      <div class="card" onclick="alert('Revenue Forecast')"><h3>Revenue Forecast</h3><p>Potential earnings estimated.</p></div>
+      <div class="card" onclick="alert('Follow-Up Scheduling')"><h3>Follow-Up</h3><p>Auto reminders for leads.</p></div>
+    </div>
+    <div style="overflow-x:auto; background:#071124; padding:15px; border-radius:8px; margin-top:20px;">
+      <table>
+        <thead>
+          <tr><th>Lead</th><th>Platform</th><th>Status</th><th>Pitch Sent</th><th>Potential Revenue</th></tr>
+        </thead>
+        <tbody id="inboundLeadsTable"></tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- Admin Panel -->
-    <section id="adminDashboard">
-      <h2>Admin Dashboard</h2>
-      <div class="grid">
-        <div class="card" id="counterUsers"><h3>Total Users</h3><p>0</p></div>
-        <div class="card" id="counterTasks"><h3>Total Tasks</h3><p>0</p></div>
-        <div class="card" id="counterPayments"><h3>Payments</h3><p>$0</p></div>
-        <div class="card" onclick="showModal('AI Vetting','AI vetting in progress... Profile Score: 92%')"><h3>Freelancers Overview</h3><p>AI vetting & ratings</p></div>
-        <div class="card" onclick="showModal('Employer Acquisition','Tracking pitches, follow-ups & CRM')"><h3>Employer Acquisition</h3><p>Pitches & CRM</p></div>
-      </div>
-    </section>
-
-    <!-- Panels for Employer, Recruiter, Tasker, Payments remain same as previous code -->
-    
-  </div>
 </main>
-
-<div class="notification" id="notification"></div>
 
 <footer>
   &copy; 2025 Skillmatch Marketplace — <a href="#">See More Jobs / Tasks</a>
 </footer>
 
-<div class="overlay" id="overlay" onclick="closeModal()"></div>
-<div class="modal" id="genericModal">
-  <h3 id="modalTitle"></h3>
-  <p id="modalContent"></p>
-  <button onclick="closeModal()">Close</button>
-</div>
-
 <script>
-// Public jobs/tasks
 const jobs=[], tasks=[];
 for(let i=1;i<=20;i++){
-  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20} - $${1000+i*30}`});
+  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20}`});
   tasks.push({id:i,title:`Task ${i}`,reward:(0.5+i*0.25).toFixed(2),est:`${2+i} min`});
 }
+
 const jobsGrid=document.getElementById("jobsGrid");
 const tasksGrid=document.getElementById("tasksGrid");
 jobs.forEach(job=>{
   const div=document.createElement("div");
-  div.className="card"; div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
+  div.className="card";
+  div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
   jobsGrid.appendChild(div);
 });
 tasks.forEach(task=>{
   const div=document.createElement("div");
-  div.className="card"; div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
+  div.className="card";
+  div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
   tasksGrid.appendChild(div);
 });
 
-// Sidebar navigation
-function showPanel(id){
-  document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+// Transactions mock
+const transactionTable=document.getElementById("transactionTable");
+const transactions=[{date:"2025-10-14",user:"John Doe",method:"M-Pesa",amount:"$50",status:"Completed"},{date:"2025-10-15",user:"Jane Smith",method:"PayPal",amount:"$120",status:"Pending"}];
+transactions.forEach(t=>{
+  const row=document.createElement("tr");
+  row.innerHTML=`<td>${t.date}</td><td>${t.user}</td><td>${t.method}</td><td>${t.amount}</td><td>${t.status}</td>`;
+  transactionTable.appendChild(row);
+});
 
-// Set user role
-function setRole(role){
-  showNotification(`Logged in as ${role.toUpperCase()}`);
-}
+// Freelancer task mock
+const freelancerTaskTable=document.getElementById("freelancerTaskTable");
+const fTasks=[{task:"Design Logo",freelancer:"Alice",status:"Completed",payment:"$50",escrow:"Released"},{task:"Write Article",freelancer:"Bob",status:"In Progress",payment:"$30",escrow:"Held"}];
+fTasks.forEach(t=>{
+  const row=document.createElement("tr");
+  row.innerHTML=`<td>${t.task}</td><td>${t.freelancer}</td><td>${t.status}</td><td>${t.payment}</td><td>${t.escrow}</td>`;
+  freelancerTaskTable.appendChild(row);
+});
 
-// Generic modal
-const overlay=document.getElementById('overlay');
-const genericModal=document.getElementById('genericModal');
-function showModal(title, content){
-  document.getElementById('modalTitle').innerText=title;
-  document.getElementById('modalContent').innerText=content;
-  overlay.style.display='block';
-  genericModal.style.display='block';
-}
-function closeModal(){ overlay.style.display='none'; genericModal.style.display='none'; }
+// Inbound Leads
+const inboundLeads = [
+  {lead:"ABC Corp", platform:"LinkedIn", status:"Contacted", pitch:"Sent", revenue:"$500"},
+  {lead:"XYZ Ltd", platform:"Fiverr", status:"Responded", pitch:"Sent", revenue:"$1,200"},
+  {lead:"MegaDesigns", platform:"Upwork", status:"Ignored", pitch:"Sent", revenue:"$750"},
+];
+const inboundLeadsTable = document.getElementById("inboundLeadsTable");
+inboundLeads.forEach(lead=>{
+  const row = document.createElement("tr");
+  row.innerHTML=`<td>${lead.lead}</td><td>${lead.platform}</td><td>${lead.status}</td><td>${lead.pitch}</td><td>${lead.revenue}</td>`;
+  inboundLeadsTable.appendChild(row);
+});
 
-// Notification
-const notif=document.getElementById('notification');
-function showNotification(msg){
-  notif.innerText=msg; notif.style.right='20px';
-  setTimeout(()=>{ notif.style.right='-300px'; },3000);
-}
+// Demo video alert
+function generateDemoVideo(){ alert("Demo video generated! (6 seconds preview)"); }
 
-// Live counters simulation
-let users=1200, tasksCount=5400, payments=15000;
-function updateCounters(){
-  document.getElementById('counterUsers').querySelector('p').innerText=users;
-  document.getElementById('counterTasks').querySelector('p').innerText=tasksCount;
-  document.getElementById('counterPayments').querySelector('p').innerText=`$${payments}`;
-}
-setInterval(()=>{
-  users+=Math.floor(Math.random()*5); tasksCount+=Math.floor(Math.random()*10); payments+=Math.floor(Math.random()*100);
-  updateCounters();
-},2000);
-updateCounters();
+// Scroll sidebar
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});}
 </script>
 </body>
 </html>
